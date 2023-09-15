@@ -25,6 +25,16 @@ let persons = [
   },
 ]
 
+const generateRandomId = () => {
+  return Math.floor(Math.random() * 10000)
+}
+
+const showErrorMsg = (res, msg) => {
+  return res.status(400).json({ 
+    error: msg 
+  })
+}
+
 app.get('/info', (req, res) => {
   res.send(`
     <p>Phonebook has info for ${persons.length} people</p>
@@ -55,7 +65,31 @@ app.delete('/api/persons/:id', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
-  
+  const body = req.body
+
+  if (!body.name) {
+    return showErrorMsg(res, 'Name missing')
+  }
+
+  if (!body.number) {
+    return showErrorMsg(res, 'Number missing')
+  }
+
+  const alreadyAdded = persons.find(p => p.name === body.name)
+
+  if (alreadyAdded) {
+    return showErrorMsg(res, 'Name must be unique')
+  }
+
+  const newPerson = {
+    id: generateRandomId(),
+    name: body.name,
+    number: body.number
+  }
+
+  persons = persons.concat(newPerson)
+
+  res.json(newPerson)
 })
 
 const PORT = 3001
