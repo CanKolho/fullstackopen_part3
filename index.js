@@ -1,6 +1,16 @@
 const express = require('express')
+const morgan = require('morgan')
+
 const app = express()
+
+morgan.token('postData', function (req) {
+  return req.method === 'POST' ? JSON.stringify(req.body) : ' '
+})
+
 app.use(express.json())
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :postData')
+)
 
 let persons = [
   {
@@ -65,17 +75,17 @@ app.delete('/api/persons/:id', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
-  const body = req.body
+  const { name, number } = req.body
 
-  if (!body.name) {
+  if (!name) {
     return showErrorMsg(res, 'Name missing')
   }
 
-  if (!body.number) {
+  if (!number) {
     return showErrorMsg(res, 'Number missing')
   }
 
-  const alreadyAdded = persons.find(p => p.name === body.name)
+  const alreadyAdded = persons.find(p => p.name === name)
 
   if (alreadyAdded) {
     return showErrorMsg(res, 'Name must be unique')
@@ -83,8 +93,8 @@ app.post('/api/persons', (req, res) => {
 
   const newPerson = {
     id: generateRandomId(),
-    name: body.name,
-    number: body.number
+    name: name,
+    number: number
   }
 
   persons = persons.concat(newPerson)
