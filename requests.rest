@@ -7,13 +7,10 @@ GET https://puhelinluettelo-lry1.onrender.com/info
 GET https://puhelinluettelo-lry1.onrender.com/api/persons/1
 
 ###
-GET https://puhelinluettelo-lry1.onrender.com/api/persons/10
+GET https://puhelinluettelo-lry1.onrender.com/api/persons/65074de4966598c52c69e542
 
 ###
-DELETE https://puhelinluettelo-lry1.onrender.com/api/persons/1
-
-###
-DELETE https://puhelinluettelo-lry1.onrender.com/api/persons/10
+DELETE https://puhelinluettelo-lry1.onrender.com/api/persons/65074de4966598c52c69e542
 
 ###
 POST https://puhelinluettelo-lry1.onrender.com/api/persons
@@ -25,17 +22,10 @@ Content-Type: application/json
 }
 
 ###
-POST https://puhelinluettelo-lry1.onrender.com/api/persons
+PUT https://puhelinluettelo-lry1.onrender.com/api/persons/65075173966598c52c69e557
 Content-Type: application/json
 
 {
-  "number": "09-222234222"
-}
-
-###
-POST https://puhelinluettelo-lry1.onrender.com/api/persons
-Content-Type: application/json
-
-{
-  "name": "Barney Stinson"
+  "name": "Barney Stinson",
+  "number": "1"
 }
